@@ -47,6 +47,7 @@ class tarjetaPerfil extends HTMLElement{
         color: #555;
         text-align: center;
       }
+      //
     </style>
     `;
   }
