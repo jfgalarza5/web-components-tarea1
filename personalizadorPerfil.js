@@ -64,7 +64,11 @@ class PersonalizadorPerfil extends HTMLElement{
 
     render(){
         this.shadowRoot.appendChild(this.getTemplate().content.cloneNode(true));
+        this.botonAccion();
+        this.noEnviarForm();
+    }
 
+    botonAccion(){
         this.shadowRoot.querySelector("#btn_actualizar").addEventListener("click", ()=>{
             const tarjeta_perfil = document.getElementById(this.getAttribute("id_tarjeta"));
             if(!tarjeta_perfil) return;
@@ -88,7 +92,9 @@ class PersonalizadorPerfil extends HTMLElement{
                 descSlot.textContent = descripcion;
             }
         });
+    }
 
+    noEnviarForm(){
         this.shadowRoot.querySelector("form").addEventListener("submit", (e)=>{
             e.preventDefault();
         });
