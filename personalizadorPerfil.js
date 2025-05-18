@@ -7,10 +7,10 @@ class PersonalizadorPerfil extends HTMLElement{
         const template = document.createElement("template");
         template.innerHTML = /*html*/ `
         <form>
-            <label>Fondo: <input type="color" id="color" value="#fff"></label>
-            <label>Foto de perfil: <input type="text" id="img" placeholder="https://imagen.jpg"></label>
-            <label>Nombre: <input type="text" id="nombre" placeholder="Ingresa tu nombre"></label>
-            <label>Descripcion: <input type="text" id="descripcion" placeholder="Ingresa tu descripcion"></label>
+            <label>Fondo: <input type="color" id="color" value="#ffffff"></label>
+            <label>Foto de perfil: <input type="text" id="img" placeholder="https://imagen.jpg" required></label>
+            <label>Nombre: <input type="text" id="nombre" placeholder="Ingresa tu nombre" required></label>
+            <label>Descripcion: <input type="text" id="descripcion" placeholder="Ingresa tu descripcion" required></label>
             <button id="btn_actualizar">Actualizar</button>
         </form>
         ${this.getStyle()}
@@ -18,25 +18,50 @@ class PersonalizadorPerfil extends HTMLElement{
         return template;
     }
     getStyle(){
-        return `
+    return `
         <style>
             form {
                 display: flex;
                 flex-direction: column;
-                gap: 10px;
-                padding: 10px;
-                margin-top: 1em;
-                border: 1px solid #ccc;
-                border-radius: 10px;
-                width: 220px;
+                gap: 12px;
+                padding: 20px;
+                background-color: #ffffff;
+                border: 1px solid #ddd;
+                border-radius: 12px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                width: 280px;
             }
-            input, button {
-                padding: 5px;
+
+            label {
+                display: flex;
+                flex-direction: column;
                 font-size: 14px;
+                color: #333;
+            }
+
+            input {
+                padding: 8px 10px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 14px;
+            }
+
+            #color{
+                padding: 0px;
+            }
+
+            button {
+                padding: 10px;
+                font-size: 14px;
+                background-color:#a22;
+                color: white;
+                border: none;
+                border-radius: 6px;
             }
         </style>
         `;
     }
+
     render(){
         this.shadowRoot.appendChild(this.getTemplate().content.cloneNode(true));
 
@@ -47,7 +72,8 @@ class PersonalizadorPerfil extends HTMLElement{
             const imagen = this.shadowRoot.querySelector('#img').value;
             const nombre = this.shadowRoot.querySelector('#nombre').value;
             const descripcion = this.shadowRoot.querySelector('#descripcion').value;
-            console.log();
+
+            if(!color && !nombre && !imagen && !descripcion) return;
             
             tarjeta_perfil.setAttribute('tema', color);
             tarjeta_perfil.setAttribute('src', imagen);
