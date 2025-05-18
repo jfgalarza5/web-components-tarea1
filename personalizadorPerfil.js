@@ -73,7 +73,7 @@ class PersonalizadorPerfil extends HTMLElement{
             const nombre = this.shadowRoot.querySelector('#nombre').value;
             const descripcion = this.shadowRoot.querySelector('#descripcion').value;
 
-            if(!color && !nombre && !imagen && !descripcion) return;
+            if(!color || !nombre || !imagen || !descripcion) return;
             
             tarjeta_perfil.setAttribute('tema', color);
             tarjeta_perfil.setAttribute('src', imagen);
