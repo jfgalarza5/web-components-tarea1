@@ -4,7 +4,7 @@ class tarjetaPerfil extends HTMLElement{
     this.attachShadow({mode: "open"});
   }
   static get observedAttributes() {
-    return ['tema'];
+    return ['tema', 'src'];
   }
   getTemplate(){
     const template = document.createElement("template");
@@ -58,8 +58,8 @@ class tarjetaPerfil extends HTMLElement{
   }
   attributeChangedCallback(name, oldValue, newValue) {
     if (name === 'src' && this.shadowRoot) {
-      const src = this.shadowRoot.getElementById('foto').src;
-      if (src) src = newValue;
+      const foto = this.shadowRoot.getElementById('foto');
+      if (foto) foto.src = newValue;
     }
     if (name === 'tema' && this.shadowRoot) {
       const contenedor = this.shadowRoot.querySelector('.container');
