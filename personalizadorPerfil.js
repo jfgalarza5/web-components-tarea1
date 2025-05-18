@@ -11,7 +11,7 @@ class PersonalizadorPerfil extends HTMLElement{
             <label>Foto de perfil: <input type="text" id="img" placeholder="https://imagen.jpg" required></label>
             <label>Nombre: <input type="text" id="nombre" placeholder="Ingresa tu nombre" required></label>
             <label>Descripcion: <input type="text" id="descripcion" placeholder="Ingresa tu descripcion" required></label>
-            <button id="btn_actualizar">Actualizar</button>
+            <button><slot name="boton-text"></slot></button>
         </form>
         ${this.getStyle()}
         `;
@@ -69,7 +69,7 @@ class PersonalizadorPerfil extends HTMLElement{
     }
 
     botonAccion(){
-        this.shadowRoot.querySelector("#btn_actualizar").addEventListener("click", ()=>{
+        this.shadowRoot.querySelector("button").addEventListener("click", ()=>{
             const tarjeta_perfil = document.getElementById(this.getAttribute("id_tarjeta"));
             if(!tarjeta_perfil) return;
             const color = this.shadowRoot.querySelector('#color').value;
