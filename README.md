@@ -1,62 +1,63 @@
-# Web Component: Tarjeta de Perfil
+# Nueva Rama: tarea2-integracion-html
 
-Se creo un componente sencillo que permite agregar una tarjeta de perfil a tu html que incluye una foto, nombre y descripcion de la persona, ademas de el color de fondo de la tarjeta.
+En esta rama se añadió un segundo Web Component llamado `<personalizador-perfil>`, el cual permite modificar dinámicamente el contenido y estilo de una tarjeta de perfil `<tarjeta-perfil>` ya existente.
 
 
 ## Objetivo
-Facilitar el uso de tarjetas de perfil reutilizables y personalizables en html, utilizando las tecnologias Web Components como Custom Elements y Shadow DOM.
+Permitir la modificacion en ejecucion del componente `<tarjeta-perfil>` mediante un nuevo componente en formato formulario, para mejorar la interaccion del usuario con el componente original.
 
 ## Caracteristicas
-- Tarjeta contenedora de 200px.
-- Color de fondo personalizable en hex.
-- Imagen de perfil circular de 100px.
-- Nombre en negrita.
-- Descripcion en gris #555 y 10px de fontsize.
+* Modifica dinámicamente una tarjeta de perfil existente.
+* Permite modificar el tema, nombre, descripcion y foto de perfil de la tarjeta.
+* Texto del botón personalizable con un `<slot name="boton-text">`.
+* Implementa encapsulamiento con Shadow DOM.
+* No se aplica cambios si los campos están vacíos.
 
 ## Uso
-Clona este repositorio o simplemente descarga el [tarjetaPerfil.js](tarjetaPerfil.js) y ponlo en tu proyecto, luego solo tienes que llamar al modulo mediante: `<<script src="tarjetaPerfil.js" type="module"></script>>` al final de tu body, luego donde quieras poner la tarjeta usas la etiqueta `<tarjeta-perfil>`.
-- Si quieres ver el ejemplo completo en html te dejo el [index.html](index.html)
+
+Clona este repositorio o cambia a la rama `tarea2-integracion-html` y descarga el archivo [personalizadorPerfil.js](personalizadorPerfil.js), además del archivo [tarjetaPerfil.js](tarjetaPerfil.js). Incluyelos en tu proyecto. Despues llama a los módulos al final de tu `<body>` así:
+
+```html
+<script src="tarjetaPerfil.js" type="module"></script>
+<script src="personalizadorPerfil.js" type="module"></script>
+```
 
 ## Atributos Soportados
-|Atributo   |Descripcion                    |Tipo    |
-|:---------:|:-----------------------------:|:------:|
-|`src`      | Url de la imagen de perfil.   |String  |
-|`tema`     | Hex del color de fondo.       |String  |
+
+| Atributo        | Descripción                                                    | Tipo    |
+|:---------------:|:--------------------------------------------------------------:|:-------:|
+| `id_tarjeta`    | ID del `<tarjeta-perfil>` que se va a personalizar | String  |
 
 ## Slots
-|Nombre       |Descripcion                           |Tipo           |
-|:-----------:|:------------------------------------:|:-------------:|
-|`nombre`     | Nombre de la persona en el perfil.   |Etiqueta html  |
-|`descripcion`| Descripcion de la persona            |Etiqueta html  |
+| Nombre         | Descripción                                | Tipo           |
+|:--------------:|:-------------------------------------------:|:--------------:|
+| `boton-text`   | Texto que se mostrara dentro del boton      | Etiqueta HTML  |
 
 
 # Reporte Tecnico
-## Cómo se logra la encapsulación con Shadow DOM.
-La encapsulación con Shadow DOM nos deja aislar la estructura, estilos y comportamiento de un componente web del resto de la página, evitando errore y manteniendo la modularidad del codigo. Shadow DOM crea un DOM independiente dentro del elemento, evitando que los estilos y scripts externos afecten al componente y viceversa, lo que permite que se pueda poner estilos propios a `<tarjeta-perfil>` que no son afectados por estilos externos.
-## Diferencias entre slots con nombre y slots por defecto .
-| Característica               | Slot por Defecto                    | Slot con Nombre                         |
-|-----------------------------|-------------------------------------|------------------------------------------|
-| Declaración                 | `<slot></slot>`                     | `<slot name="nombre"></slot>`            |
-| Uso                         | Para insertar contenido general     | Para insertar contenido específico       |
-| Uso en el componente  | Se usa cuando se necesita solo una ranura de contenido | Se usa cuando se requieren múltiples ranuras con propósitos diferentes |
-| Ejemplo de uso en HTML      | `<p>Lorem ipsun</p>`             | `<span slot="nombre">El Campeon</span>`|
+## Cómo se integran elementos HTML estándar en un Web Component.
+En un Web Component se pueden usar elementos HTML normales como formularios, botones o inputs dentro del componente, y todo funciona como en una página común. La diferencia es que esos elementos quedan encerrados dentro del componente gracias al Shadow DOM, así no afectan ni se mezclan con el resto de la página.
 
-## Limitaciones de los Web Components en aplicaciones reales.
-El uso de web components puede ayudarnos cuando se requieren objetos puntuales, como una tarjeta de perfil sencilla o widgets reutilizables, pero si necesitamos una aplicacion compleja con velocidad de desarrollo talvez usar web components hechos desde cero no sea la mejor opcion, se puede optar por el uso de frameworks modernos que nos facilitan el uso de componentes y nos podemos enfocar en la funcionalidad de nuestra aplicacion real.
+## Mecanismos de comunicación entre componentes (ej: eventos personalizados).
+Cuando varios componentes web se necesitan comunicar entre sí, lo mas comun es usar eventos personalizados. Usando un componente puede disparar un evento como un click y el otro componente puede escuchar ese evento y reaccionar cuando ocurra.
+
+## Ventajas de encapsular HTML complejo dentro de un componente.
+
+Encapsular HTML complejo dentro de un componente ventajas como mantener el codigo de este componente aislado lo que significa que los estilos o scripts externos no dañan el componente, ni que el componente afecte otras partes de la página. Ademas facilita la reutilización, ya que el mismo componente puede usarse en diferentes partes del proyecto simplemente importandolo.
 
 # Capturas
-Ejemplo de uso Tarjeta de perfil 1
+Al momento de realizar la primera carga del index se muestra los valores por defecto que tiene el componente tarjeta de perfil:
 
-![Captura perfil 1](docs/componente_perfil1.png)
+![Primera Carga](docs/primera_carga.png)
 
-Ejemplo de uso Tarjeta de perfil 2
+Una vez que se rellena el formulario del nuevo componente y se actualiza, automaticamente cambia el componente tarjeta con los nuevos valores:
 
-![Captura perfil 2](docs/componente_perfil2.png)
+![Interaccion entre componentes](docs/interaccion_entre_componentes.png)
 
-Ejemplo de uso Tarjeta de perfil 3
+Codigo con mi usuario de git:
 
-![Captura perfil 3](docs/componente_perfil3.png)
+![Codigo con perfil git](docs/code_con_mi_user.png)
 
-Codigo con captura de mi User
+Los commits recientes de este repositorio:
 
-![Codigo con perfil git](docs/Code%20con%20mi%20user%20de%20git.png)
+![Commits recientes](docs/commits_recientes.png)
