@@ -17,14 +17,20 @@
 </head>
 <body>
     <section>
+        <espe-modal id="modal">
+            <p>Los datos del perfil fueron actualizados</p>
+        </espe-modal>
+
         <tarjeta-perfil id="tarjeta" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuwSrnMfUrna4huv5nXDM6KzaaHaVY8O8HnA&s" tema="#cfc">
             <span slot="nombre">El Campeon</span>
             <span slot="descripcion">El egolifter mas famoso del mundo.</span>
         </tarjeta-perfil>
-        <personalizador-perfil id_tarjeta="tarjeta"></personalizador-perfil>
+
+        <personalizador-perfil id_tarjeta="tarjeta" id_modal="modal">
+            <span slot="boton-text">Actualizar</span>
+        </personalizador-perfil>
     </section>
 
-    <script src="tarjetaPerfil.js" type="module"></script>
-    <script src="personalizadorPerfil.js" type="module"></script>
+    <script src="app.js" type="module"></script>
 </body>
 </html>
