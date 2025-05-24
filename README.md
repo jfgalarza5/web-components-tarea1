@@ -1,63 +1,87 @@
-# Nueva Rama: tarea2-integracion-html
+# Nueva Rama: tarea3-especificaciones-avanzadas
 
-En esta rama se añadió un segundo Web Component llamado `<personalizador-perfil>`, el cual permite modificar dinámicamente el contenido y estilo de una tarjeta de perfil `<tarjeta-perfil>` ya existente.
+En esta rama se añadió un tercer Web Component llamado `<espe-modal>`, el cual muestra un modal que es usado en este ejemplo para mostrar el mensaje de que el perfil fue actualizado exitosamente.
 
 
 ## Objetivo
-Permitir la modificacion en ejecucion del componente `<tarjeta-perfil>` mediante un nuevo componente en formato formulario, para mejorar la interaccion del usuario con el componente original.
+Desarrollar un componente web avanzado `<espe-modal>` aplicando tecnicas modernas de Web Components, tales como modularizacion con ES Modules, uso de `<template>`, Shadow DOM con slots, y comunicacion mediante eventos personalizados.
 
 ## Caracteristicas
-* Modifica dinámicamente una tarjeta de perfil existente.
-* Permite modificar el tema, nombre, descripcion y foto de perfil de la tarjeta.
-* Texto del botón personalizable con un `<slot name="boton-text">`.
-* Implementa encapsulamiento con Shadow DOM.
-* No se aplica cambios si los campos están vacíos.
+* Muestra un cuadro modal centrado con fondo semitransparente.
+* Permite personalizar el título y contenido del modal mediante slots con nombre (`<slot name="title">`, `<slot name="content">`).
+* Contenido por defecto definido mediante <slot> cuando no se proporciona contenido externo.
+* Incluye un boton interno para cerrar el modal.
+* Fácil integración en cualquier proyecto HTML a través de una etiqueta personalizada `<espe-modal>`.
 
 ## Uso
 
-Clona este repositorio o cambia a la rama `tarea2-integracion-html` y descarga el archivo [personalizadorPerfil.js](personalizadorPerfil.js), además del archivo [tarjetaPerfil.js](tarjetaPerfil.js). Incluyelos en tu proyecto. Despues llama a los módulos al final de tu `<body>` así:
+Clona este repositorio o cambia a la rama `tarea3-especificaciones-avanzadas` y descarga el archivo [espeModal.js](components/espeModal.js). Incluyelo a tu proyecto. Luego llama a los módulos al final de tu `<body>` así:
 
 ```html
-<script src="tarjetaPerfil.js" type="module"></script>
-<script src="personalizadorPerfil.js" type="module"></script>
+<script src="espeModal.js" type="module"></script>
 ```
 
-## Atributos Soportados
+Después, puedes utilizar el componente `<espe-modal>` directamente en tu HTML con contenido personalizado mediante slots:
 
-| Atributo        | Descripción                                                    | Tipo    |
-|:---------------:|:--------------------------------------------------------------:|:-------:|
-| `id_tarjeta`    | ID del `<tarjeta-perfil>` que se va a personalizar | String  |
+```html
+<espe-modal id="modal">
+    <span slot="titulo">Perfil actualizado</span>
+    <p slot="contenido">Los datos del perfil fueron actualizados</p>
+</espe-modal>
+```
+
+Para cerrar el modal desde el botón interno, simplemente haz clic en el botón "Cerrar" que aparece dentro del componente. Tambien puedes escuchar el evento modal-cerrado para ejecutar acciones personalizadas cuando se cierre el modal:
+
+```js
+document.getElementById('modal').addEventListener('modal-cerrado', () => {
+    alert("El modal fue cerrado");
+});
+```
 
 ## Slots
-| Nombre         | Descripción                                | Tipo           |
-|:--------------:|:-------------------------------------------:|:--------------:|
-| `boton-text`   | Texto que se mostrara dentro del boton      | Etiqueta HTML  |
+| Nombre         | Descripción                                                              | Tipo           |
+|:--------------:|:------------------------------------------------------------------------:|:--------------:|
+| `titulo`       | Titulo personalizado que se mostrara en la parte superior del modal      | Etiqueta HTML  |
+| `contenido`    | Contenido principal del cuerpo del modal                                 | Etiqueta HTML  |
 
 
 # Reporte Tecnico
-## Cómo se integran elementos HTML estándar en un Web Component.
-En un Web Component se pueden usar elementos HTML normales como formularios, botones o inputs dentro del componente, y todo funciona como en una página común. La diferencia es que esos elementos quedan encerrados dentro del componente gracias al Shadow DOM, así no afectan ni se mezclan con el resto de la página.
+## Cómo se logra la modularización con ES Modules.
+La modularización con ES Modules consiste en dividir el código en varios archivos más pequeños y específicos, usando las palabras export e import. Esto permite que cada parte del código esté organizada y sea más fácil de entender. Como al crear el componente `<espe-modal>`, lo puedes guardar en un archivo aparte (como espeModal.js) y desde tu archivo HTML lo llamas con `<script type="module" src="espeModal.js"></script>`. Gracias a esto, el código no se mezcla con otras partes del proyecto, es más sencillo de mantener y se puede reutilizarse en otros lugares sin complicaciones.
 
-## Mecanismos de comunicación entre componentes (ej: eventos personalizados).
-Cuando varios componentes web se necesitan comunicar entre sí, lo mas comun es usar eventos personalizados. Usando un componente puede disparar un evento como un click y el otro componente puede escuchar ese evento y reaccionar cuando ocurra.
+## Diferencias entre `<template>` y Shadow DOM..
+El elemento `<template>` sirve para definir una estructura HTML que no se muestra en pantalla hasta que se usa con JavaScript. Es como un molde: puedes tener allí contenido que luego se copia y se inserta en el componente cuando lo necesites. Por sí solo, no tiene efecto visual ni se renderiza en el DOM principal.
 
-## Ventajas de encapsular HTML complejo dentro de un componente.
+En cambio, el Shadow DOM es una forma de encapsular el contenido y los estilos de un componente para que no interfieran con el resto de la página, ni que el estilo externo lo afecte. Todo lo que está dentro del Shadow DOM vive en una burbuja aislada.
 
-Encapsular HTML complejo dentro de un componente ventajas como mantener el codigo de este componente aislado lo que significa que los estilos o scripts externos no dañan el componente, ni que el componente afecte otras partes de la página. Ademas facilita la reutilización, ya que el mismo componente puede usarse en diferentes partes del proyecto simplemente importandolo.
+## Casos de uso de eventos personalizados en aplicaciones reales.
+Los eventos personalizados son muy utiles en aplicaciones reales cuando diferentes partes de una interfaz necesitan comunicarse entre sí sin estar directamente conectadas. Por ejemplo, en un sistema con varios componentes web, un botón dentro de un modal puede emitir un evento personalizado al cerrarse, y otros componentes o la aplicación principal pueden escuchar ese evento para actualizar datos, mostrar mensajes o activar otras acciones.
 
 # Capturas
-Al momento de realizar la primera carga del index se muestra los valores por defecto que tiene el componente tarjeta de perfil:
+Al dar click en el boton Actualizar se muestra automaticamente el modal espe-modal:
 
-![Primera Carga](docs/primera_carga.png)
+![Espe Modal](docs/modal-al-actualizar-perfil.png)
 
-Una vez que se rellena el formulario del nuevo componente y se actualiza, automaticamente cambia el componente tarjeta con los nuevos valores:
+Al dar click en Cerrar el modal se ejecuta el evento personalizado cerrar-modal:
 
-![Interaccion entre componentes](docs/interaccion_entre_componentes.png)
+![Evento personalizado](docs/evento-personalizado-al-cerrar-modal.png)
 
-Codigo con mi usuario de git:
+Diagrama de comunicación entre componentes.:
 
-![Codigo con perfil git](docs/code_con_mi_user.png)
+```mermaid
+sequenceDiagram
+    participant Usuario
+    participant Personalizador as <personalizador-perfil>
+    participant Tarjeta as <tarjeta-perfil>
+    participant Modal as <espe-modal>
 
-Los commits recientes de este repositorio:
+    Usuario->>Personalizador: Rellena formulario
+    Personalizador->>Tarjeta: Actualiza nombre/tema/foto (propiedades)
+    Usuario->>Tarjeta: Visualiza tarjeta personalizada
 
-![Commits recientes](docs/commits_recientes.png)
+    Personalizador->>Modal: Abre modal
+    Modal-->>Usuario: Muestra el mensaje: foto perfil actualizada
+    Usuario->>Modal: Click en botón "Cerrar"
+    Modal-->>Usuario: Dispara evento personalizado "modal-cerrado"
+
+```
