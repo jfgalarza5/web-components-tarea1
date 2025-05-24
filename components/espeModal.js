@@ -8,7 +8,10 @@ export class EspeModal extends HTMLElement {
         template.innerHTML = `
             <div class="modal">
                 <div class="modal-content">
-                    <slot>Contenido por defecto del modal</slot>
+                    <h3><slot name="titulo">Titulo por defecto</slot></h3>
+                    <div class="modal-body">
+                        <slot name="contenido">Contenido por defecto</slot>
+                    </div>
                     <button id="cerrar">Cerrar</button>
                 </div>
             </div>
@@ -52,6 +55,12 @@ export class EspeModal extends HTMLElement {
                     position: relative;
                     animation: fadeIn 0.3s ease;
                 }
+                .modal-body {
+                    margin-top: 10px;
+                    font-size: 16px;
+                    color: #333;
+                    line-height: 1.5;
+                }
             
                 button#cerrar {
                     margin-top: 20px;
@@ -82,13 +91,15 @@ export class EspeModal extends HTMLElement {
             </style>
         `;
     }
-
-    botonAccion() {
-        this.shadowRoot.getElementById("cerrar").addEventListener("click", () => this.ocultar());
+    eventos(){
+        this.shadowRoot.getElementById('cerrar').addEventListener('click', () => {
+            this.ocultar();
+            this.dispatchEvent(new CustomEvent('modal-cerrado', { bubbles: true, composed: true }));
+        });
     }
     render() {
         this.shadowRoot.appendChild(this.getTemplate().content.cloneNode(true));
-        this.botonAccion();
+        this.eventos();
     }
     connectedCallback() {
         this.render();
