@@ -1,4 +1,4 @@
-class tarjetaPerfil extends HTMLElement{
+export class tarjetaPerfil extends HTMLElement{
   constructor(){
     super();
     this.attachShadow({mode: "open"});

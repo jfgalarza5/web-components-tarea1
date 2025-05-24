@@ -1,4 +1,4 @@
-class PersonalizadorPerfil extends HTMLElement{
+export class PersonalizadorPerfil extends HTMLElement{
     constructor(){
         super();
         this.attachShadow({mode: "open"});
@@ -70,8 +70,10 @@ class PersonalizadorPerfil extends HTMLElement{
 
     botonAccion(){
         this.shadowRoot.querySelector("button").addEventListener("click", ()=>{
-            const tarjeta_perfil = document.getElementById(this.getAttribute("id_tarjeta"));
-            if(!tarjeta_perfil) return;
+            const tarjeta = document.getElementById(this.getAttribute("id_tarjeta"));
+            const modal = document.getElementById(this.getAttribute("id_modal"));
+
+            if(!tarjeta) return;
             const color = this.shadowRoot.querySelector('#color').value;
             const imagen = this.shadowRoot.querySelector('#img').value;
             const nombre = this.shadowRoot.querySelector('#nombre').value;
@@ -79,11 +81,11 @@ class PersonalizadorPerfil extends HTMLElement{
 
             if(!color || !nombre || !imagen || !descripcion) return;
             
-            tarjeta_perfil.setAttribute('tema', color);
-            tarjeta_perfil.setAttribute('src', imagen);
+            tarjeta.setAttribute('tema', color);
+            tarjeta.setAttribute('src', imagen);
             
-            const nombreSlot = tarjeta_perfil.querySelector('[slot="nombre"]');
-            const descSlot = tarjeta_perfil.querySelector('[slot="descripcion"]');
+            const nombreSlot = tarjeta.querySelector('[slot="nombre"]');
+            const descSlot = tarjeta.querySelector('[slot="descripcion"]');
 
             if (nombreSlot && nombre.trim() !== '') {
                 nombreSlot.textContent = nombre;
@@ -91,6 +93,8 @@ class PersonalizadorPerfil extends HTMLElement{
             if (descSlot && descripcion.trim() !== '') {
                 descSlot.textContent = descripcion;
             }
+
+            modal.mostrar();
         });
     }
 
